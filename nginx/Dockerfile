@@ -11,10 +11,10 @@ WORKDIR /opt
 
 #RUN apk add --no-cache gettext
 
-COPY auth.conf auth.htpasswd launch.sh ./
+COPY auth.conf auth.htpasswd launch.sh /opt
 
-RUN chmod 0755 ./launch.sh
+RUN chmod 0755 /opt/launch.sh
 
 EXPOSE 19999
 
-CMD ["./launch.sh"]
+CMD ["/opt/launch.sh"]
