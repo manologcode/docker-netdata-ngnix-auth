@@ -1,0 +1,47 @@
+version: '3'
+services:
+  netdata:
+    image: netdata/netdata
+    container_name: netdata
+    hostname: netdata 
+    networks:
+      - net_netdata
+    expose:
+      - 19999
+    restart: unless-stopped
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      # - ./netdataconfig/netdata:/etc/netdata:ro
+      - netdataconfig:/etc/netdata
+      - netdatalib:/var/lib/netdata
+      - netdatacache:/var/cache/netdata
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
+
+  auth:
+    image: manologcode/netdata_auth
+    container_name: nginx-auth
+    networks:
+      - net_netdata
+    ports:
+      - 19999:19999
+    links:
+      - netdata
+    environment:
+      USER: "admin"
+      PASS: "admin"
+
+volumes:
+  netdataconfig:
+  netdatalib:
+  netdatacache:
+
+networks:
+  net_netdata:    
+
