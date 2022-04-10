@@ -3,7 +3,6 @@ services:
   netdata:
     image: netdata/netdata
     container_name: netdata
-    hostname: netdata 
     networks:
       - net_netdata
     expose:
@@ -13,9 +12,12 @@ services:
       - SYS_PTRACE
     security_opt:
       - apparmor:unconfined
+    environment:
+      - TELEGRAM_BOT_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxx 
+      - TELEGRAM_CHAT_ID=XXXXXXXXXXX
+    
     volumes:
-      # - ./netdataconfig/netdata:/etc/netdata:ro
-      - netdataconfig:/etc/netdata
+      - netdata:/etc/netdata:ro
       - netdatalib:/var/lib/netdata
       - netdatacache:/var/cache/netdata
       - /etc/passwd:/host/etc/passwd:ro
@@ -34,11 +36,11 @@ services:
     links:
       - netdata
     environment:
-      USER: "admin"
-      PASS: "admin"
+      USER: "1234"
+      PASS: "1234"
 
 volumes:
-  netdataconfig:
+  netdata:
   netdatalib:
   netdatacache:
 
