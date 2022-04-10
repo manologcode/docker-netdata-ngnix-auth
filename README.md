@@ -16,6 +16,8 @@ corre en el servidor sobre el puerto 19999
 
 integrar en el contenedor nginx proxi
 
+```
+
 version: '3'
 services:
   netdata:
@@ -65,3 +67,4 @@ volumes:
 networks:
   net_netdata:    
 
+```
